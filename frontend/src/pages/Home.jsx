@@ -8,6 +8,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import imageCompression from "browser-image-compression";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Home = () => {
   const [tileImages, setTileImages] = useState(Array(480).fill(null));
@@ -16,7 +17,7 @@ const Home = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/pixels");
+        const res = await fetch(`${API_URL}/api/pixels`);
         const data = await res.json();
   
         const updatedImages = [...tileImages];
@@ -75,7 +76,7 @@ const Home = () => {
         setSelectedTileIndex(index);
 
         try {
-          const res = await fetch("http://localhost:5000/api/upload", {
+          const res = await fetch(`${API_URL}/api/upload`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -144,7 +145,7 @@ const Home = () => {
           };
   
           try {
-            const response = await fetch(`http://localhost:5000/api/pixels/${selectedTileIndex}`, {
+            const response = await fetch(`${API_URL}/api/pixels/${selectedTileIndex}`, {
               method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json',
