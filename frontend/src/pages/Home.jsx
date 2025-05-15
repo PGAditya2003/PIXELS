@@ -106,7 +106,7 @@ const Home = () => {
   };
 
   input.click();
-};
+  };
    
   // Handle tile click
   const handleTileClick = (index) => {
@@ -192,131 +192,142 @@ const Home = () => {
   const selectedTile = selectedTileIndex !== null ? tileImages[selectedTileIndex] : null;
 
   return (
-    <Box
-    display="flex"
-    flexDirection={{ base: "column", md: "row" }}
-    justifyContent="center"
-    alignItems="center"
-    p={4}
-    minH="100vh"
-    w="100%"
-    position="relative" // Add this to contain absolute children
+   // Inside return (
+<Box
+  display="flex"
+  flexDirection={{ base: "column", md: "row" }}
+  justifyContent="center"
+  alignItems={{ base: "stretch", md: "center" }}
+  p={4}
+  minH="100vh"
+  w="100%"
+  position="relative"
+>
+  <Box w="100%">
+  <Box textAlign={{ base: "left", md: "center" }} mb={4}>
+  <Text fontSize="2xl" fontWeight="bold" mb={2}>
+    PIXELS BY NIT RAIPUR
+  </Text>
+  <Text fontSize="lg">
+    Click on a tile to upload an image. Click again to view or edit the image. Get creative and have fun!
+  </Text>
+</Box>
+
+
+   {/* Grid Box */}
+<Box
+  p={4}
+  borderWidth={1}
+  borderRadius="lg"
+  boxShadow="lg"
+  maxW={{ base: "100%", md: "fit-content" }}
+  overflowX="auto"
+  mx="auto" // ✅ center the whole box on desktop
+>
+  <Grid
+    templateColumns="repeat(24, 1fr)"
+    gap={0}
+    minW="960px" // ✅ ensures horizontal scroll on mobile but auto width on desktop
   >
-
-    {/* Fix placement of the grid and side panel */}
-    <Box >  
-    
-      <Box  >
-        <Text fontSize="2xl" fontWeight="bold" mb={4} textAlign="left" >
-          PIXELS BY NIT RAIPUR
-        </Text>
-        <Text fontSize="lg" mb={4} textAlign="left">
-          Click on a tile to upload an image. Click again to view or edit the image. Get creative and have fun!
-        </Text>
-      </Box>
-
-      {/* Grid Box */}
-      <Box
-      p={4}
-      borderWidth={1}
-      borderRadius="lg"
-      boxShadow="lg"
-      maxW={{ base: "100%", md: "fit-content" }}
-      
-    >
-
-      <Grid templateColumns="repeat(24, 1fr)" gap={0}>
-        {Array.from({ length: 480 }).map((_, index) => (
-          <GridItem
-            key={index}
-            w="40px"
-            h="36px"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            bg="gray.800"
-            border="1px solid black"
-            p={0}
-            m={0}
-          >
-            <Button
-              w="100%"
-              h="100%"
-              p={0}
-              m={0}
-              bg="gray.800"
-              onClick={() => handleTileClick(index)}
-              borderRadius={0}
-            >
-              {tileImages[index] ? (
-                <img
-                  src={tileImages[index].src}
-                  alt="tile"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-              ) : (
-                "+"
-              )}
-            </Button>
-          </GridItem>
-        ))}
-      </Grid>
-    </Box>
-
-        {/* Side Panel Box */}
-        {selectedTile && (
-        <Box
-          p={4}
-          borderWidth={1}
-          borderRadius="lg"
-          boxShadow="lg"
-          w={{ base: "100%", md: "300px" }}
-          maxH={{ base: "auto", md: "864px" }}
-          overflowY="auto"
-          mt={{ base: 4, md: 0 }}
-          position={{ base: "static", md: "absolute" }} // absolute on md+
-          top={"30%"} 
-          right={"10%"}
-          zIndex={10}
-          animation="fadeIn 0.9s ease-in-out"
+    {Array.from({ length: 480 }).map((_, index) => (
+      <GridItem
+        key={index}
+        w="40px"
+        h="36px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        bg="gray.800"
+        border="1px solid black"
+        p={0}
+        m={0}
+      >
+        <Button
+          w="100%"
+          h="100%"
+          p={0}
+          m={0}
+          bg="gray.800"
+          onClick={() => handleTileClick(index)}
+          borderRadius={0}
         >
-
-            <Box mb={2} display="flex" justifyContent="space-between">
-              <Text fontSize="xl" fontWeight="bold">#{selectedTileIndex}</Text>
-              <Button size="sm" onClick={closePanel}>❌</Button>
-            </Box>
-
-            <Image
-              src={selectedTile.src}
-              alt="Tile"
-              mb={4}
-              borderRadius="md"
-              boxShadow="md"
+          {tileImages[index] ? (
+            <img
+              src={tileImages[index].src}
+              alt="tile"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
             />
-            <Text><strong>Posted by:</strong> {selectedTile.poster}</Text>
-            <Text><strong>Time:</strong> {selectedTile.time}</Text>
+          ) : (
+            "+"
+          )}
+        </Button>
+      </GridItem>
+    ))}
+  </Grid>
+</Box>
 
-            <Button mt={6} colorScheme="blue" onClick={handleEdit}>
-              Edit Image
-            </Button>
+
+    {/* Side Panel */}
+    {selectedTile && (
+      <Box
+        p={4}
+        borderWidth={1}
+        borderRadius="lg"
+        boxShadow="lg"
+        w={{ base: "100%", md: "300px" }}
+        maxH={{ base: "auto", md: "864px" }}
+        overflowY="auto"
+        mt={{ base: 4, md: 0 }}
+        position={{ base: "static", md: "absolute" }}
+        top={{ md: "30%" }}
+        right={{ md: "10%" }}
+        zIndex={10}
+        animation="fadeIn 0.9s ease-in-out"
+      >
+        <Box mb={2} display="flex" justifyContent="space-between">
+          <Text fontSize="xl" fontWeight="bold">
+            #{selectedTileIndex}
+          </Text>
+          <Button size="sm" onClick={closePanel}>
+            ❌
+          </Button>
+        </Box>
+
+        <Image
+          src={selectedTile.src}
+          alt="Tile"
+          mb={4}
+          borderRadius="md"
+          boxShadow="md"
+        />
+        <Text>
+          <strong>Posted by:</strong> {selectedTile.poster}
+        </Text>
+        <Text>
+          <strong>Time:</strong> {selectedTile.time}
+        </Text>
+
+        <Button mt={6} colorScheme="blue" onClick={handleEdit}>
+          Edit Image
+        </Button>
       </Box>
-      )}
+    )}
+  </Box>
 
-
-    </Box>
-  
-
-  
-    <Box as="style">
+  <Box as="style">
     {`
       @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
       }
     `}
-    </Box>
-
+  </Box>
 </Box>
+
 
   );
 };
