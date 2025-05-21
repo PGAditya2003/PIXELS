@@ -211,173 +211,177 @@ const HomeNew = () => {
   );
 }
 
-  return (
-    <Flex direction="column" align="center" justify="center" w={"100%"} h={"100vh"} bg="gray.800">
-
-        <Flex w={"90%"} direction={["column" , "row"]} align="center" justify="center"  p={4}   boxShadow="lg">
-           
-           {/* ***************** LEFT TITLE ************************ */}
-           <Box w={"20%"}  
-                // border="0px"
-                // borderColor="white"
-                // borderStyle="dotted"
-                p={4}
-                // borderRadius="md"
-                >
-                
-                <Flex direction={"column"} align={"left"}  >
-                 <Image src={logo} alignContent={"center"} w={"80%"} />
-                 <Text fontSize="2xl" fontWeight="bold" mb={2}>
-                   PIXELS BY NIT RAIPUR
-                 </Text>
-                </Flex>
-
-                 <Text fontSize="lg" >  
-                   <ul>
-                     <li>Click on a tile to upload an image.</li>
-                     <li>Click again to view or edit the image.</li>
-                     <li>Get creative and have fun!</li>
-                   </ul>    
-                 </Text>
-            </Box>
-
-            {/* ***************** CENTER GRID ************************ */}
-            <Box
-              p={4}
-              borderWidth={1}
-              borderRadius="lg"
-              boxShadow="lg"
-              maxW={{ base: "70%", md: "fit-content" }}
-              overflowX="auto"
-              mx="auto" // ✅ center the whole box on desktop
-            >
-              <Grid
-                templateColumns="repeat(24, 1fr)"
-                gap={0}
-                minW="960px" // ✅ ensures horizontal scroll on mobile but auto width on desktop
-              >
-                {Array.from({ length: 480 }).map((_, index) => (
-                  <GridItem
-                    key={index}
-                    w="40px"
-                    h="36px"
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    bg="gray.800"
-                    border="1px solid black"
-                    p={0}
-                    m={0}
-                  >
-                    <Button
-                      w="100%"
-                      h="100%"
-                      p={0}
-                      m={0}
-                      bg="gray.800"
-                      onClick={() => handleTileClick(index)}
-                      borderRadius={0}
-                    >
-                      {tileImages[index] ? (
-                        <img
-                          src={tileImages[index].src}
-                          alt="tile"
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
-                      ) : (
-                        "+"
-                      )}
-                    </Button>
-                  </GridItem>
-                ))}
-              </Grid>
-            </Box>
-
-           { /* ***************** RIGHT PANEL ************************ */} 
-                        {!selectedTile && (
-                            <Flex justify="center" align="center"
-                                minH={"40vh"} 
-                                minW={"300px"}
-                                border="2px"
-                                borderColor="white"
-                                borderStyle="dotted"
-                                p={4}
-                                borderRadius="md"
-                            >
-                                <Text fontStyle="italic">
-                                    Click on a tile to open it here
-                                </Text>
-                            </Flex>
-                        )}
-                         { selectedTile && (
-                  <Box
-                    p={4}
-                    borderWidth={1}
-                    borderRadius="lg"
-                    boxShadow="lg"
-                    w={{ base: "100%", md: "300px" }}
-                    maxH={{ base: "auto", md: "864px" }}
-                    overflowY="auto"
-                    mt={{ base: 4, md: 0 }}
-        // position={{ base: "static", md: "absolute" }}
-        // top={{ md: "30%" }}
-        // right={{ md: "10%" }}
-        zIndex={10}
-        animation="fadeIn 0.9s ease-in-out"
+ return (
+  <Flex direction="column" align="center" justify="center" w="100%" minH="100vh" bg="gray.800">
+    <Flex
+      w="90%"
+      direction={{ base: "column", md: "row" }}
+      align="center"
+      justify="center"
+      p={4}
+      boxShadow="lg"
+    >
+      {/* ***************** LEFT TITLE ************************ */}
+      <Box
+        w={{ base: "100%", md: "20%" }}
+        p={4}
+        display="flex"
+        flexDirection="column"
+        alignItems={{ base: "center", md: "flex-start" }}
+        textAlign={{ base: "center", md: "left" }}
+        mb={{ base: 4, md: 0 }}
       >
-        <Box mb={2} display="flex" justifyContent="space-between">
-          <Text fontSize="xl" fontWeight="bold">
-            #{selectedTileIndex}
+        <Image src={logo} w="80%" mb={2} />
+        <Text fontSize="2xl" fontWeight="bold" mb={2}>
+          PIXELS BY NIT RAIPUR
+        </Text>
+        <Text fontSize="lg">
+          <ul>
+            <li>Click on a tile to upload an image.</li>
+            <li>Click again to view or edit the image.</li>
+            <li>Get creative and have fun!</li>
+          </ul>
+        </Text>
+      </Box>
+
+      {/* ***************** CENTER GRID ************************ */}
+      <Box
+        p={4}
+        borderWidth={1}
+        borderRadius="lg"
+        boxShadow="lg"
+        maxW={{ base: "100%", md: "fit-content" }}
+        overflowX="auto"
+        mx="auto"
+        mb={{ base: 4, md: 0 }}
+      >
+        <Grid
+          templateColumns="repeat(24, 1fr)"
+          gap={0}
+          minW="960px"
+        >
+          {Array.from({ length: 480 }).map((_, index) => (
+            <GridItem
+              key={index}
+              w="40px"
+              h="36px"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              bg="gray.800"
+              border="1px solid black"
+              p={0}
+              m={0}
+            >
+              <Button
+                w="100%"
+                h="100%"
+                p={0}
+                m={0}
+                bg="gray.800"
+                onClick={() => handleTileClick(index)}
+                borderRadius={0}
+              >
+                {tileImages[index] ? (
+                  <img
+                    src={tileImages[index].src}
+                    alt="tile"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  "+"
+                )}
+              </Button>
+            </GridItem>
+          ))}
+        </Grid>
+      </Box>
+
+      {/* ***************** RIGHT PANEL ************************ */}
+      {!selectedTile && (
+        <Flex
+          justify="center"
+          align="center"
+          minH="40vh"
+          minW="300px"
+          border="2px"
+          borderColor="white"
+          borderStyle="dotted"
+          p={4}
+          borderRadius="md"
+          w={{ base: "100%", md: "auto" }}
+        >
+          <Text fontStyle="italic">Click on a tile to open it here</Text>
+        </Flex>
+      )}
+
+      {selectedTile && (
+        <Box
+          p={4}
+          borderWidth={1}
+          borderRadius="lg"
+          boxShadow="lg"
+          w={{ base: "100%", md: "300px" }}
+          maxH={{ base: "auto", md: "864px" }}
+          overflowY="auto"
+          mt={{ base: 4, md: 0 }}
+          zIndex={10}
+          animation="fadeIn 0.9s ease-in-out"
+        >
+          <Box mb={2} display="flex" justifyContent="space-between">
+            <Text fontSize="xl" fontWeight="bold">
+              #{selectedTileIndex}
+            </Text>
+            <Button size="sm" onClick={closePanel}>
+              ❌
+            </Button>
+          </Box>
+
+          <Image
+            src={selectedTile.src}
+            alt="Tile"
+            mb={4}
+            borderRadius="md"
+            boxShadow="md"
+          />
+          <Text>
+            <strong>Posted by:</strong> {selectedTile.poster}
           </Text>
-          <Button size="sm" onClick={closePanel}>
-            ❌
+          <Text>
+            <strong>Time:</strong> {selectedTile.time}
+          </Text>
+
+          <Button mt={6} colorScheme="blue" onClick={handleEdit}>
+            Edit Image
           </Button>
         </Box>
-
-        <Image
-          src={selectedTile.src}
-          alt="Tile"
-          mb={4}
-          borderRadius="md"
-          boxShadow="md"
-        />
-        <Text>
-          <strong>Posted by:</strong> {selectedTile.poster}
-        </Text>
-        <Text>
-          <strong>Time:</strong> {selectedTile.time}
-        </Text>
-
-        <Button mt={6} colorScheme="blue" onClick={handleEdit}>
-          Edit Image
-        </Button>
-        </Box>
-                        )}
- 
-        </Flex>
-        
-        {/* NOTE */}
-        <Flex>
-            <Text fontStyle={"italic"} mt={4} >
-                **Note : Only upload images you are comfortable with sharing.
-            </Text>
-        </Flex>
-    
-        {/* Animation */}
-       <Box as="style">
-        {`
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        `}
-        </Box>
+      )}
     </Flex>
-  )
+
+    {/* NOTE */}
+    <Flex>
+      <Text fontStyle="italic" mt={4}>
+        **Note : Only upload images you are comfortable with sharing.
+      </Text>
+    </Flex>
+
+    {/* Animation */}
+    <Box as="style">
+      {`
+      @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+      }
+      `}
+    </Box>
+  </Flex>
+);
+
+
 }
 
 export default HomeNew
