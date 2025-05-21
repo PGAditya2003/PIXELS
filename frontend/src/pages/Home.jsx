@@ -196,22 +196,26 @@ const Home = () => {
 <Box
   display="flex"
   flexDirection={{ base: "column", md: "row" }}
-  justifyContent="center"
+  justifyContent="space-between"
   alignItems={{ base: "stretch", md: "center" }}
   p={4}
   minH="100vh"
   w="100%"
   position="relative"
+  bg="gray.900" 
+  color="white"   
 >
   <Box w="100%">
-  <Box textAlign={{ base: "left", md: "center" }} mb={4}>
-  <Text fontSize="2xl" fontWeight="bold" mb={2}>
-    PIXELS BY NIT RAIPUR
-  </Text>
-  <Text fontSize="lg">
-    Click on a tile to upload an image. Click again to view or edit the image. Get creative and have fun!
-  </Text>
-</Box>
+    <Box textAlign={{ base: "left", md: "center" }} mb={4}>
+      <Text fontSize="2xl" fontWeight="bold" mb={2}>
+        PIXELS BY NIT RAIPUR
+      </Text>
+      <Text fontSize="lg">
+        Click on a tile to upload an image. Click again to view or edit the image. Get creative and have fun!
+        <br />
+        Can you paint a picture , One Pixel at a time?
+      </Text>
+    </Box>
 
 
    {/* Grid Box */}
