@@ -10,6 +10,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import imageCompression from "browser-image-compression";
+import { useMediaQuery } from "@chakra-ui/react";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -19,6 +20,8 @@ const HomeNew = () => {
     const [loading, setLoading] = useState(true);
      const [tileImages, setTileImages] = useState(Array(480).fill(null));
       const [selectedTileIndex, setSelectedTileIndex] = useState(null);
+      const [isBelow1080] = useMediaQuery("(max-width: 1080px)");
+
     
       useEffect(() => {
         const fetchImages = async () => {
@@ -199,6 +202,8 @@ const HomeNew = () => {
     
       const selectedTile = selectedTileIndex !== null ? tileImages[selectedTileIndex] : null;
 
+
+    //   *************PRE-LOADER*********
       if (loading) {
   return (
     <Flex w="100%" h="100vh" align="center" justify="center" bg="gray.900">
@@ -213,14 +218,15 @@ const HomeNew = () => {
 
  return (
   <Flex direction="column" align="center" justify="center" w="100%" minH="100vh" bg="gray.800">
-    <Flex
-      w="90%"
-      direction={{ base: "column", md: "row" }}
-      align="center"
-      justify="center"
-      p={4}
-      boxShadow="lg"
-    >
+        <Flex
+            w="90%"
+            direction={isBelow1080 ? "column" : "row"}
+            align="center"
+            justify="center"
+            p={4}
+            boxShadow="lg"
+        >
+
       {/* ***************** LEFT TITLE ************************ */}
       <Box
         w={{ base: "100%", md: "20%" }}
@@ -252,8 +258,8 @@ const HomeNew = () => {
         boxShadow="lg"
         maxW={{ base: "100%", md: "fit-content" }}
         overflowX="auto"
-        mx="auto"
         mb={{ base: 4, md: 0 }}
+        mx={"auto"}
       >
         <Grid
           templateColumns="repeat(24, 1fr)"
@@ -307,12 +313,13 @@ const HomeNew = () => {
           justify="center"
           align="center"
           minH="40vh"
-          minW="300px"
+          minW="20vw"
           border="2px"
           borderColor="white"
           borderStyle="dotted"
           p={4}
           borderRadius="md"
+          mx="auto"
           w={{ base: "100%", md: "auto" }}
         >
           <Text fontStyle="italic">Click on a tile to open it here</Text>
@@ -325,11 +332,12 @@ const HomeNew = () => {
           borderWidth={1}
           borderRadius="lg"
           boxShadow="lg"
-          w={{ base: "100%", md: "300px" }}
+          w={{ base: "100%", md: "20vw" }}
           maxH={{ base: "auto", md: "864px" }}
           overflowY="auto"
           mt={{ base: 4, md: 0 }}
           zIndex={10}
+          mx={"auto"}
           animation="fadeIn 0.9s ease-in-out"
         >
           <Box mb={2} display="flex" justifyContent="space-between">
