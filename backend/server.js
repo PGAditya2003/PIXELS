@@ -41,7 +41,7 @@ app.post('/api/upload', async (req, res) => {
 // GET /api/pixels
 app.get('/api/pixels', async (req, res) => {
   try {
-    const limit = parseInt(req.query.limit) || 50; // default 50
+    const limit = parseInt(req.query.limit) || 3; // default 50
     const page = parseInt(req.query.page) || 1;
     const pixels = await Pixel.find({})
       .skip((page - 1) * limit)
