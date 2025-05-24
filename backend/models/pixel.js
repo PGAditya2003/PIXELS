@@ -12,7 +12,8 @@ const pixelSchema = new mongoose.Schema({
   },
   tileIndex: {
     type: Number,
-    required: false
+    required: false,
+    index: true // Index for faster queries
   },
   imageData: {
     type: String, // Store base64 string (e.g., "data:image/png;base64,...")
