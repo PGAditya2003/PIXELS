@@ -8,6 +8,7 @@ const app = express();
 
 // Middleware
 app.use(cors());
+
 app.use(express.json({ limit: '10mb' })); // supports large base64 image uploads
 
 // Connect to Database
@@ -39,14 +40,19 @@ app.post('/api/upload', async (req, res) => {
 
 // GET /api/pixels
 app.get('/api/pixels', async (req, res) => {
-    try {
-      const pixels = await Pixel.find({});
-      res.status(200).json(pixels);
-    } catch (error) {
-      console.error("Error fetching pixel data:", error.message);
-      res.status(500).json({ message: 'Server error', error: error.message });
-    }
-  });
+  try {
+    const limit = parseInt(req.query.limit) || 50; // default 50
+    const page = parseInt(req.query.page) || 1;
+    const pixels = await Pixel.find({})
+      .skip((page - 1) * limit)
+      .limit(limit);
+    res.status(200).json(pixels);
+  } catch (error) {
+    console.error("Error fetching pixel data:", error.message);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 
   app.patch('/api/pixels/:tileIndex', async (req, res) => {
     try {
@@ -99,8 +105,6 @@ app.get('/api/pixels', async (req, res) => {
       res.status(500).json({ message: 'Server error', error: error.message });
     }
   });
-  
-
   
   
 

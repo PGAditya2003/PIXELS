@@ -241,7 +241,7 @@ const HomeNew = () => {
         <Text fontSize="2xl" fontWeight="bold" mb={2}>
           PIXELS BY NIT RAIPUR
         </Text>
-        <Text fontSize="lg">
+        <Text fontSize="lg" as={"div"} >
           <ul>
             <li>Click on a tile to upload an image.</li>
             <li>Click again to view or edit the image.</li>
