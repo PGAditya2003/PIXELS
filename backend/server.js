@@ -39,19 +39,33 @@ app.post('/api/upload', async (req, res) => {
   });
 
 // GET /api/pixels
-app.get('/api/pixels', async (req, res) => {
+app.get("/api/pixels", async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  const skip = (page - 1) * limit;
+
   try {
-    const limit = 3; // default 3
-    const page = parseInt(req.query.page) || 1;
     const pixels = await Pixel.find({})
-      .skip((page - 1) * limit)
+      .sort({ date: -1 }) // optional: latest first
+      .skip(skip)
       .limit(limit);
-    res.status(200).json(pixels);
-  } catch (error) {
-    console.error("Error fetching pixel data:", error.message);
-    res.status(500).json({ message: 'Server error', error: error.message });
+
+    const response = pixels.map(p => ({
+      tileIndex: p.tileIndex,
+      imageData: p.imageData,
+      user: p.user,
+      date: p.date,
+    }));
+
+    res.status(200).json(response); // ✅ return array directly
+  } catch (err) {
+    console.error("Error fetching pixels:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
 
 
   app.patch('/api/pixels/:tileIndex', async (req, res) => {

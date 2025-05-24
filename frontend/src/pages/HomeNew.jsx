@@ -22,28 +22,41 @@ const HomeNew = () => {
       const [selectedTileIndex, setSelectedTileIndex] = useState(null);
       const [isBelow1080] = useMediaQuery("(max-width: 1080px)");
 
+      const [page, setPage] = useState(1); // current page
+      const [allLoaded, setAllLoaded] = useState(false); // stop loading when done
+
+
     
       useEffect(() => {
         const fetchImages = async () => {
-          try {
-            const res = await fetch(`${API_URL}/api/pixels`);
-            const data = await res.json();
-      
-            const updatedImages = [...tileImages];
-            data.forEach(pixel => {
-              updatedImages[pixel.tileIndex] = {
-                src: pixel.imageData,
-                poster: pixel.user,
-                time: new Date(pixel.date).toLocaleString(),
-              };
-            });
-           setTileImages(updatedImages);
-            setLoading(false); // ✅ loading is done
+  if (allLoaded) return;
 
-          } catch (err) {
-            console.error("Error loading images:", err);
-          }
-        };
+  try {
+    const res = await fetch(`${API_URL}/api/pixels?page=${page}&limit=3`);
+    const data = await res.json();
+
+    if (data.length === 0) {
+      setAllLoaded(true); // no more data
+      return;
+    }
+
+    const updatedImages = [...tileImages];
+    data.forEach(pixel => {
+      updatedImages[pixel.tileIndex] = {
+        src: pixel.imageData,
+        poster: pixel.user,
+        time: new Date(pixel.date).toLocaleString(),
+      };
+    });
+
+    setTileImages(updatedImages);
+    setPage(prev => prev + 1); // load next page on next call
+    setLoading(false);
+  } catch (err) {
+    console.error("Error loading images:", err);
+  }
+};
+
       
         fetchImages(); // initial load
       
@@ -203,18 +216,18 @@ const HomeNew = () => {
       const selectedTile = selectedTileIndex !== null ? tileImages[selectedTileIndex] : null;
 
 
-    //   *************PRE-LOADER*********
-      if (loading) {
-  return (
-    <Flex w="100%" h="100vh" align="center" justify="center" bg="gray.900">
-      <Box textAlign="center">
-        {/* <Image src={logo} w="100px" mx="auto" mb={4} /> */}
+//     //   *************PRE-LOADER*********
+//       if (loading) {
+//   return (
+//     <Flex w="100%" h="100vh" align="center" justify="center" bg="gray.900">
+//       <Box textAlign="center">
+//         {/* <Image src={logo} w="100px" mx="auto" mb={4} /> */}
         
-        <Text fontSize="xl" color="white">Loading Updated Collage...</Text>
-      </Box>
-    </Flex>
-  );
-}
+//         <Text fontSize="xl" color="white">Loading Updated Collage...</Text>
+//       </Box>
+//     </Flex>
+//   );
+// }
 
  return (
   <Flex direction="column" align="center" justify="center" w="100%" minH="100vh" bg="gray.800">
